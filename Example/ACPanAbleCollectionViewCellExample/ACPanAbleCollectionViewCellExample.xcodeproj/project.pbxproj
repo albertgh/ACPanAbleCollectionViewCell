@@ -9,23 +9,16 @@
 /* Begin PBXBuildFile section */
 		2A3639D81B7E370F00929239 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3639D71B7E370F00929239 /* main.m */; };
 		2A3639DB1B7E370F00929239 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3639DA1B7E370F00929239 /* AppDelegate.m */; };
-		2A3639DE1B7E370F00929239 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3639DD1B7E370F00929239 /* FirstViewController.m */; };
-		2A3639E11B7E370F00929239 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3639E01B7E370F00929239 /* SecondViewController.m */; };
 		2A3639E41B7E370F00929239 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A3639E21B7E370F00929239 /* Main.storyboard */; };
 		2A3639E61B7E370F00929239 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A3639E51B7E370F00929239 /* Images.xcassets */; };
 		2A3639E91B7E370F00929239 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A3639E71B7E370F00929239 /* LaunchScreen.xib */; };
-		2A3639F51B7E370F00929239 /* ACPanAbleCollectionViewCellExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3639F41B7E370F00929239 /* ACPanAbleCollectionViewCellExampleTests.m */; };
+		2A363A041B7E37C000929239 /* ACPanAbleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A363A031B7E37C000929239 /* ACPanAbleCollectionViewCell.m */; };
+		2A363A0D1B7E443000929239 /* ACPACVCActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A363A0C1B7E443000929239 /* ACPACVCActionView.m */; };
+		2A363A101B7E444C00929239 /* ACPACVCActionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A363A0F1B7E444C00929239 /* ACPACVCActionItem.m */; };
+		2ADBABBE1B806B2F00968BD4 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ADBABBA1B806B2F00968BD4 /* FirstViewController.m */; };
+		2ADBABBF1B806B2F00968BD4 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ADBABBD1B806B2F00968BD4 /* SecondViewController.m */; };
+		2ADBABC21B806B5A00968BD4 /* FirstVCCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ADBABC11B806B5A00968BD4 /* FirstVCCollectionViewCell.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		2A3639EF1B7E370F00929239 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A3639CA1B7E370F00929239 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2A3639D11B7E370F00929239;
-			remoteInfo = ACPanAbleCollectionViewCellExample;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2A3639D21B7E370F00929239 /* ACPanAbleCollectionViewCellExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ACPanAbleCollectionViewCellExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -33,27 +26,25 @@
 		2A3639D71B7E370F00929239 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2A3639D91B7E370F00929239 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2A3639DA1B7E370F00929239 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		2A3639DC1B7E370F00929239 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		2A3639DD1B7E370F00929239 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		2A3639DF1B7E370F00929239 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		2A3639E01B7E370F00929239 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		2A3639E31B7E370F00929239 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2A3639E51B7E370F00929239 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2A3639E81B7E370F00929239 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		2A3639EE1B7E370F00929239 /* ACPanAbleCollectionViewCellExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ACPanAbleCollectionViewCellExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2A3639F31B7E370F00929239 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2A3639F41B7E370F00929239 /* ACPanAbleCollectionViewCellExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACPanAbleCollectionViewCellExampleTests.m; sourceTree = "<group>"; };
+		2A363A021B7E37C000929239 /* ACPanAbleCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACPanAbleCollectionViewCell.h; sourceTree = "<group>"; };
+		2A363A031B7E37C000929239 /* ACPanAbleCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACPanAbleCollectionViewCell.m; sourceTree = "<group>"; };
+		2A363A0B1B7E443000929239 /* ACPACVCActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACPACVCActionView.h; sourceTree = "<group>"; };
+		2A363A0C1B7E443000929239 /* ACPACVCActionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACPACVCActionView.m; sourceTree = "<group>"; };
+		2A363A0E1B7E444C00929239 /* ACPACVCActionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACPACVCActionItem.h; sourceTree = "<group>"; };
+		2A363A0F1B7E444C00929239 /* ACPACVCActionItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACPACVCActionItem.m; sourceTree = "<group>"; };
+		2ADBABB91B806B2F00968BD4 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		2ADBABBA1B806B2F00968BD4 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		2ADBABBC1B806B2F00968BD4 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		2ADBABBD1B806B2F00968BD4 /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		2ADBABC01B806B5A00968BD4 /* FirstVCCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstVCCollectionViewCell.h; sourceTree = "<group>"; };
+		2ADBABC11B806B5A00968BD4 /* FirstVCCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstVCCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		2A3639CF1B7E370F00929239 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2A3639EB1B7E370F00929239 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -67,7 +58,6 @@
 			isa = PBXGroup;
 			children = (
 				2A3639D41B7E370F00929239 /* ACPanAbleCollectionViewCellExample */,
-				2A3639F11B7E370F00929239 /* ACPanAbleCollectionViewCellExampleTests */,
 				2A3639D31B7E370F00929239 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -76,7 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				2A3639D21B7E370F00929239 /* ACPanAbleCollectionViewCellExample.app */,
-				2A3639EE1B7E370F00929239 /* ACPanAbleCollectionViewCellExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -84,12 +73,11 @@
 		2A3639D41B7E370F00929239 /* ACPanAbleCollectionViewCellExample */ = {
 			isa = PBXGroup;
 			children = (
+				2A363A011B7E37A400929239 /* ACPanAbleCollectionViewCell */,
 				2A3639D91B7E370F00929239 /* AppDelegate.h */,
 				2A3639DA1B7E370F00929239 /* AppDelegate.m */,
-				2A3639DC1B7E370F00929239 /* FirstViewController.h */,
-				2A3639DD1B7E370F00929239 /* FirstViewController.m */,
-				2A3639DF1B7E370F00929239 /* SecondViewController.h */,
-				2A3639E01B7E370F00929239 /* SecondViewController.m */,
+				2ADBABB81B806B2F00968BD4 /* First */,
+				2ADBABBB1B806B2F00968BD4 /* Second */,
 				2A3639E21B7E370F00929239 /* Main.storyboard */,
 				2A3639E51B7E370F00929239 /* Images.xcassets */,
 				2A3639E71B7E370F00929239 /* LaunchScreen.xib */,
@@ -107,21 +95,46 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		2A3639F11B7E370F00929239 /* ACPanAbleCollectionViewCellExampleTests */ = {
+		2A363A011B7E37A400929239 /* ACPanAbleCollectionViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				2A3639F41B7E370F00929239 /* ACPanAbleCollectionViewCellExampleTests.m */,
-				2A3639F21B7E370F00929239 /* Supporting Files */,
+				2A363A0A1B7E443000929239 /* ActionView */,
+				2A363A021B7E37C000929239 /* ACPanAbleCollectionViewCell.h */,
+				2A363A031B7E37C000929239 /* ACPanAbleCollectionViewCell.m */,
 			);
-			path = ACPanAbleCollectionViewCellExampleTests;
+			name = ACPanAbleCollectionViewCell;
+			path = ../../../ACPanAbleCollectionViewCell;
 			sourceTree = "<group>";
 		};
-		2A3639F21B7E370F00929239 /* Supporting Files */ = {
+		2A363A0A1B7E443000929239 /* ActionView */ = {
 			isa = PBXGroup;
 			children = (
-				2A3639F31B7E370F00929239 /* Info.plist */,
+				2A363A0E1B7E444C00929239 /* ACPACVCActionItem.h */,
+				2A363A0F1B7E444C00929239 /* ACPACVCActionItem.m */,
+				2A363A0B1B7E443000929239 /* ACPACVCActionView.h */,
+				2A363A0C1B7E443000929239 /* ACPACVCActionView.m */,
 			);
-			name = "Supporting Files";
+			path = ActionView;
+			sourceTree = "<group>";
+		};
+		2ADBABB81B806B2F00968BD4 /* First */ = {
+			isa = PBXGroup;
+			children = (
+				2ADBABC01B806B5A00968BD4 /* FirstVCCollectionViewCell.h */,
+				2ADBABC11B806B5A00968BD4 /* FirstVCCollectionViewCell.m */,
+				2ADBABB91B806B2F00968BD4 /* FirstViewController.h */,
+				2ADBABBA1B806B2F00968BD4 /* FirstViewController.m */,
+			);
+			path = First;
+			sourceTree = "<group>";
+		};
+		2ADBABBB1B806B2F00968BD4 /* Second */ = {
+			isa = PBXGroup;
+			children = (
+				2ADBABBC1B806B2F00968BD4 /* SecondViewController.h */,
+				2ADBABBD1B806B2F00968BD4 /* SecondViewController.m */,
+			);
+			path = Second;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,24 +157,6 @@
 			productReference = 2A3639D21B7E370F00929239 /* ACPanAbleCollectionViewCellExample.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2A3639ED1B7E370F00929239 /* ACPanAbleCollectionViewCellExampleTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2A3639FB1B7E370F00929239 /* Build configuration list for PBXNativeTarget "ACPanAbleCollectionViewCellExampleTests" */;
-			buildPhases = (
-				2A3639EA1B7E370F00929239 /* Sources */,
-				2A3639EB1B7E370F00929239 /* Frameworks */,
-				2A3639EC1B7E370F00929239 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2A3639F01B7E370F00929239 /* PBXTargetDependency */,
-			);
-			name = ACPanAbleCollectionViewCellExampleTests;
-			productName = ACPanAbleCollectionViewCellExampleTests;
-			productReference = 2A3639EE1B7E370F00929239 /* ACPanAbleCollectionViewCellExampleTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -173,10 +168,6 @@
 				TargetAttributes = {
 					2A3639D11B7E370F00929239 = {
 						CreatedOnToolsVersion = 6.4;
-					};
-					2A3639ED1B7E370F00929239 = {
-						CreatedOnToolsVersion = 6.4;
-						TestTargetID = 2A3639D11B7E370F00929239;
 					};
 				};
 			};
@@ -194,7 +185,6 @@
 			projectRoot = "";
 			targets = (
 				2A3639D11B7E370F00929239 /* ACPanAbleCollectionViewCellExample */,
-				2A3639ED1B7E370F00929239 /* ACPanAbleCollectionViewCellExampleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -210,13 +200,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2A3639EC1B7E370F00929239 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -224,30 +207,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A3639E11B7E370F00929239 /* SecondViewController.m in Sources */,
 				2A3639DB1B7E370F00929239 /* AppDelegate.m in Sources */,
-				2A3639DE1B7E370F00929239 /* FirstViewController.m in Sources */,
+				2ADBABBE1B806B2F00968BD4 /* FirstViewController.m in Sources */,
+				2A363A101B7E444C00929239 /* ACPACVCActionItem.m in Sources */,
+				2ADBABBF1B806B2F00968BD4 /* SecondViewController.m in Sources */,
+				2A363A041B7E37C000929239 /* ACPanAbleCollectionViewCell.m in Sources */,
 				2A3639D81B7E370F00929239 /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2A3639EA1B7E370F00929239 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2A3639F51B7E370F00929239 /* ACPanAbleCollectionViewCellExampleTests.m in Sources */,
+				2ADBABC21B806B5A00968BD4 /* FirstVCCollectionViewCell.m in Sources */,
+				2A363A0D1B7E443000929239 /* ACPACVCActionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		2A3639F01B7E370F00929239 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2A3639D11B7E370F00929239 /* ACPanAbleCollectionViewCellExample */;
-			targetProxy = 2A3639EF1B7E370F00929239 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2A3639E21B7E370F00929239 /* Main.storyboard */ = {
@@ -305,7 +276,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -343,7 +314,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -355,7 +326,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = ACPanAbleCollectionViewCellExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -365,43 +338,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = ACPanAbleCollectionViewCellExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		2A3639FC1B7E370F00929239 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = ACPanAbleCollectionViewCellExampleTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ACPanAbleCollectionViewCellExample.app/ACPanAbleCollectionViewCellExample";
-			};
-			name = Debug;
-		};
-		2A3639FD1B7E370F00929239 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = ACPanAbleCollectionViewCellExampleTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ACPanAbleCollectionViewCellExample.app/ACPanAbleCollectionViewCellExample";
 			};
 			name = Release;
 		};
@@ -424,14 +365,7 @@
 				2A3639FA1B7E370F00929239 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-		};
-		2A3639FB1B7E370F00929239 /* Build configuration list for PBXNativeTarget "ACPanAbleCollectionViewCellExampleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2A3639FC1B7E370F00929239 /* Debug */,
-				2A3639FD1B7E370F00929239 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
