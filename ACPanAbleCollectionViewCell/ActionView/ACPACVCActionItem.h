@@ -11,18 +11,9 @@
 @interface ACPACVCActionItem : UIView
 
 @property (nonatomic, assign) CGFloat                       itemWidth;
-@property (nonatomic, assign) CGFloat                       iconMarginLabel;
-
 
 - (void)configItemWithActionBlock:(void (^)(void))actionBlock
                        textString:(NSString *)textString;
-
-- (void)configItemWithActionBlock:(void (^)(void))actionBlock
-                    iconImageName:(NSString *)iconImageName;
-
-- (void)configItemWithActionBlock:(void (^)(void))actionBlock
-                       textString:(NSString *)textString
-                    iconImageName:(NSString *)iconImageName;
 
 
 @end

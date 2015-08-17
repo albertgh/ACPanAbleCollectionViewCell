@@ -35,7 +35,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
 
-    self.titleLabel.frame = self.contentView.bounds;
+    self.titleLabel.frame = self.contentView.bounds;    
 }
 
 #pragma mark - Reuse
@@ -125,11 +125,11 @@
     deleteActionItem.itemWidth = 60.0;
     [deleteActionItem configItemWithActionBlock:^{
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        if ([strongSelf.actionDelegate respondsToSelector:@selector(collectionView:didTapMoreActionButtonAtIndexPath:)]) {
+        if ([strongSelf.actionDelegate respondsToSelector:@selector(collectionView:didTapDeleteActionButtonAtIndexPath:)]) {
             UICollectionView *collectionView = [strongSelf pac_onSuperCollectionView];
             NSIndexPath *indexPath = [collectionView indexPathForCell:strongSelf];
             [strongSelf.actionDelegate collectionView:collectionView
-                    didTapMoreActionButtonAtIndexPath:indexPath];
+                  didTapDeleteActionButtonAtIndexPath:indexPath];
         }
     } textString:@"delete"];
     [actionItemsMArray addObject:deleteActionItem];

@@ -1,6 +1,6 @@
 ## ACPanAbleCollectionViewCell
 
-A customizable PanAble UICollectionViewCell
+A panable UICollectionViewCell subclass with customizable actionView.
 
 
 <img src="https://github.com/albertgh/ACPanAbleCollectionViewCell/raw/master/screenshot.gif"/>

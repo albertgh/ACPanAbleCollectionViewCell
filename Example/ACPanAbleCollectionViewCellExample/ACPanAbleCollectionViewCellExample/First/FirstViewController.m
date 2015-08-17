@@ -47,7 +47,6 @@ FirstVCCVCellActionDelegate>
     self.collectionView =
     [[UICollectionView alloc] initWithFrame:self.view.bounds
                                 collectionViewLayout:layout];
-    self.collectionView.backgroundColor = [UIColor lightGrayColor];
     
     UIEdgeInsets insets = UIEdgeInsetsMake(0.0,
                                            0.0,
@@ -56,14 +55,16 @@ FirstVCCVCellActionDelegate>
     self.collectionView.contentInset = insets;
     self.collectionView.scrollIndicatorInsets = insets;
     
-    self.collectionView.alwaysBounceVertical = YES;
-    
     [self.view addSubview:self.collectionView];
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 
 
     
     // config
+    self.collectionView.backgroundColor = [UIColor lightGrayColor];
+
+    self.collectionView.alwaysBounceVertical = YES;
+
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     
@@ -72,12 +73,12 @@ FirstVCCVCellActionDelegate>
     
     [self.collectionView registerClass:[FirstVCCollectionViewCell class]
             forCellWithReuseIdentifier:FirstVCCVCellIdentifier];
-
 }
 
 #pragma mark - Close current opened mark as read action view
 
 - (void)closeCurrentOpenedActionView {
+    // need to make this behaviour more elegant, some hitTest: way mabye
     NSArray *visibleCells = self.collectionView.visibleCells;
     for (UICollectionViewCell *cell in visibleCells) {
         if ([cell isKindOfClass:[ACPanAbleCollectionViewCell class]]) {
@@ -91,7 +92,7 @@ FirstVCCVCellActionDelegate>
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self closeCurrentOpenedActionView]; // need to make this behaviour more elegant, some hitTest: way mabye
+    [self closeCurrentOpenedActionView];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
