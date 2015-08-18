@@ -89,5 +89,5 @@ static CGFloat const ACPACVCell_DistanceForCantMoveMoreHint             = 12.0;
 
 - (BOOL)pac_isActionViewActiving;
 - (void)pac_cancelPanGesture;
-
+- (UICollectionView *)currentCollectionView;
 @end

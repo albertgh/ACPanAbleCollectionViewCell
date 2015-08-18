@@ -40,13 +40,7 @@ self.actionView =
 [self pac_addRightActionView:self.actionView];
 ```
 
-See the details in example project.
-
-
-## TODO
-
-- If actionView is opened, allows only actions on actionView or close actionView
-- Add bounces effect for panGesture 
+See more details in example project.
 
 
 #### Requirements

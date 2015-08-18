@@ -24,7 +24,7 @@
 #pragma mark - Dealloc
 
 - (void)dealloc {
-    
+    [self.ownerCell currentCollectionView].userInteractionEnabled = YES;
 }
 
 #pragma mark - Hit Test
@@ -50,6 +50,16 @@
             }
         if (self.ownerCell.isRightActionViewOpened) {
             [self.ownerCell pac_hideRightActionView];
+        }
+        //----------------------------------------------------------------------------------------------//
+        
+        //-- disable touches if action view is activing
+        if (self.ownerCell.isActionViewActiving
+            && [self.ownerCell currentCollectionView].userInteractionEnabled) {
+            [self.ownerCell currentCollectionView].userInteractionEnabled = NO;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(ACPACVCell_ActionViewAnimationDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.ownerCell currentCollectionView].userInteractionEnabled = YES;
+            });
         }
         //----------------------------------------------------------------------------------------------//
     }

@@ -33,12 +33,18 @@ FirstVCCVCellActionDelegate>
     // Do any additional setup after loading the view, typically from a nib.
     
     self.view.backgroundColor = [UIColor grayColor];
+    self.navigationItem.rightBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:@"reload"
+                                     style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(reloadFakeData)];
+
     
     self.fakeDataMArray = [[NSMutableArray alloc] init];
     
     [self initializeCollectionView];
     
-    [self loadFakeData];
+    [self reloadFakeData];
 }
 
 - (void)initializeCollectionView {
@@ -130,7 +136,7 @@ FirstVCCVCellActionDelegate>
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"didSelectItemAtIndexPath: %@", indexPath);
+    //NSLog(@"didSelectItemAtIndexPath: %@", indexPath);
     
     TestPushViewController *testVC = [[TestPushViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:testVC animated:YES];
@@ -148,7 +154,7 @@ FirstVCCVCellActionDelegate>
 
 - (void)collectionView:(UICollectionView *)collectionView didTapDeleteActionButtonAtIndexPath:(NSIndexPath *)indexPath {
     //[self closeCurrentOpenedActionView];
-    NSLog(@"didTapDeleteActionButtonAtIndexPath: %@", indexPath);
+    //NSLog(@"didTapDeleteActionButtonAtIndexPath: %@", indexPath);
     
     ACPanAbleCollectionViewCell *cell =
     (ACPanAbleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
@@ -168,10 +174,18 @@ FirstVCCVCellActionDelegate>
 
 #pragma mark - fake data
 
-- (void)loadFakeData {
+- (void)reloadFakeData {
+    [self.fakeDataMArray removeAllObjects];
+    
+    NSIndexSet *section0IndexSet =
+    [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 1)];
+    [self.collectionView reloadSections:section0IndexSet];
+    
+    
     for (NSInteger i = 0; i < 12; i++) {
         [self.fakeDataMArray addObject:@(i)];
     }
+    [self.collectionView reloadSections:section0IndexSet];
 }
 
 @end
