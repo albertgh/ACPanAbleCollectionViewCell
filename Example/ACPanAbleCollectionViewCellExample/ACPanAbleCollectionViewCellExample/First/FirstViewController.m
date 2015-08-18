@@ -7,19 +7,21 @@
 //
 
 #import "FirstViewController.h"
-
 #import "FirstVCCollectionViewCell.h"
+
+#import "TestPushViewController.h"
 
 
 static NSString * const FirstVCCVCellIdentifier = @"FirstVCCVCellIdentifier";
 
 
 @interface FirstViewController ()
-<UIScrollViewDelegate,
-UICollectionViewDataSource, UICollectionViewDelegate,
+<UICollectionViewDataSource, UICollectionViewDelegate,
 FirstVCCVCellActionDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
+
+@property (nonatomic, strong) NSMutableArray *fakeDataMArray;
 
 @end
 
@@ -32,7 +34,11 @@ FirstVCCVCellActionDelegate>
     
     self.view.backgroundColor = [UIColor grayColor];
     
+    self.fakeDataMArray = [[NSMutableArray alloc] init];
+    
     [self initializeCollectionView];
+    
+    [self loadFakeData];
 }
 
 - (void)initializeCollectionView {
@@ -48,7 +54,7 @@ FirstVCCVCellActionDelegate>
     [[UICollectionView alloc] initWithFrame:self.view.bounds
                                 collectionViewLayout:layout];
     
-    UIEdgeInsets insets = UIEdgeInsetsMake(0.0,
+    UIEdgeInsets insets = UIEdgeInsetsMake(64.0,
                                            0.0,
                                            49.0,
                                            0.0);
@@ -75,26 +81,6 @@ FirstVCCVCellActionDelegate>
             forCellWithReuseIdentifier:FirstVCCVCellIdentifier];
 }
 
-#pragma mark - Close current opened mark as read action view
-
-- (void)closeCurrentOpenedActionView {
-    // need to make this behaviour more elegant, some hitTest: way mabye
-    NSArray *visibleCells = self.collectionView.visibleCells;
-    for (UICollectionViewCell *cell in visibleCells) {
-        if ([cell isKindOfClass:[ACPanAbleCollectionViewCell class]]) {
-            ACPanAbleCollectionViewCell *panAbleCell = (ACPanAbleCollectionViewCell *)cell;
-            [panAbleCell pac_hideLeftActionView];
-            [panAbleCell pac_hideRightActionView];
-        }
-    }
-}
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self closeCurrentOpenedActionView];
-}
-
 #pragma mark - UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
@@ -104,7 +90,8 @@ FirstVCCVCellActionDelegate>
     CGFloat paddingLeftRight = 0.0;
     CGFloat cellWidth = (collectionView.bounds.size.width - (paddingLeftRight * 2)); // left & right space
 
-    CGFloat  cellHeight = [FirstVCCollectionViewCell heightForCellByIndexPath:indexPath];
+    NSNumber *itemNumber = self.fakeDataMArray[indexPath.row];
+    CGFloat  cellHeight = [FirstVCCollectionViewCell heightForCellByItemNumber:itemNumber];
     
     return CGSizeMake(cellWidth, cellHeight);
 }
@@ -116,7 +103,7 @@ FirstVCCVCellActionDelegate>
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 24;
+    return self.fakeDataMArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -127,9 +114,12 @@ FirstVCCVCellActionDelegate>
     
     // config cell
     cell.actionDelegate = self;
-    NSString *titleString = [NSString stringWithFormat:@"section: %@- row:%@", @(indexPath.section), @(indexPath.row)];
+    
+    NSNumber *itemNumber = self.fakeDataMArray[indexPath.row];
+    NSString *fakeTitleString = [NSString stringWithFormat:@"title - %@", itemNumber];
+    NSString *titleString = fakeTitleString;
     NSArray *actionOptions = @[@(FirstVCCVCellActionOptions_delete)];
-    if (indexPath.row % 2 == 0) {
+    if ([itemNumber integerValue] % 2 == 0) {
         actionOptions = @[@(FirstVCCVCellActionOptions_more), @(FirstVCCVCellActionOptions_delete)];
     }
     [cell configCellByTitleTextString:titleString actionOptions:actionOptions];
@@ -140,21 +130,44 @@ FirstVCCVCellActionDelegate>
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self closeCurrentOpenedActionView];
     NSLog(@"didSelectItemAtIndexPath: %@", indexPath);
+    
+    TestPushViewController *testVC = [[TestPushViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:testVC animated:YES];
 }
 
 #pragma mark - FirstVCCVCellActionDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didTapMoreActionButtonAtIndexPath:(NSIndexPath *)indexPath {
-    [self closeCurrentOpenedActionView];
     NSLog(@"didTapMoreActionButtonAtIndexPath: %@", indexPath);
+    
+    ACPanAbleCollectionViewCell *cell =
+    (ACPanAbleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    [cell pac_hideRightActionView];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didTapDeleteActionButtonAtIndexPath:(NSIndexPath *)indexPath {
-    [self closeCurrentOpenedActionView];
+    //[self closeCurrentOpenedActionView];
     NSLog(@"didTapDeleteActionButtonAtIndexPath: %@", indexPath);
+    
+    [self.fakeDataMArray removeObjectAtIndex:indexPath.row];
+    __weak __typeof(self)weakSelf = self;
+    [self.collectionView
+     performBatchUpdates:^{
+         __strong __typeof(weakSelf)strongSelf = weakSelf;
+         [strongSelf.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+     }
+     completion:^(BOOL finished) {
+         
+     }];
 }
 
+#pragma mark - fake data
+
+- (void)loadFakeData {
+    for (NSInteger i = 0; i < 12; i++) {
+        [self.fakeDataMArray addObject:@(i)];
+    }
+}
 
 @end

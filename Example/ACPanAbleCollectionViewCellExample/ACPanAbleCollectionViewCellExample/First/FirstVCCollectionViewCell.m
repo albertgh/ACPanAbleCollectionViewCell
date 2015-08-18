@@ -43,7 +43,7 @@
 - (void)prepareForReuse {
     [super prepareForReuse];
     
-    self.titleLabel.text = @"";
+    _titleLabel.text = @"";
 }
 
 #pragma mark - Highlight
@@ -61,11 +61,11 @@
 
 #pragma mark - Public
 
-+ (CGFloat)heightForCellByIndexPath:(NSIndexPath *)indexPath {
++ (CGFloat)heightForCellByItemNumber:(NSNumber *)itemNumber {
     CGFloat heightForCell = 0.0;
     
-    if (indexPath.row % 2 == 0) {
-        heightForCell = 90.0;
+    if ([itemNumber integerValue] % 2 == 0) {
+        heightForCell = 80.0;
     }
     else {
         heightForCell = 50.0;

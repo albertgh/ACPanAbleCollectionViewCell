@@ -7,34 +7,23 @@
 //
 
 #import "ACPanAbleCollectionViewCell.h"
-
-
-static CGFloat const ACPACVCell_DistanceForCantMoveMoreHint             = 12.0;
-
-static CGFloat const ACPACVCell_ActionViewAnimationDuration             = 0.4;
-static CGFloat const ACPACVCell_ActionViewAnimationSpringDamping        = 0.5;
-static CGFloat const ACPACVCell_ActionViewAnimationSpringVelocity       = 0.8;
-
-static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIViewAnimationOptionCurveEaseInOut;
-
+#import "ACPanAbleCollectionViewCellOverlay.h"
 
 
 @interface ACPanAbleCollectionViewCell () <UIGestureRecognizerDelegate>
 
-@property (nonatomic, assign) BOOL                                      isActionViewActiving;
-
-@property (nonatomic, strong) UIView                                    *leftActionContentView;
 @property (nonatomic, strong) ACPACVCActionView                         *leftActionView;
 @property (nonatomic, assign) CGFloat                                   leftActionViewYOffset;
 @property (nonatomic, assign, readonly) BOOL                            isClosingLeftActionView;
 
-@property (nonatomic, strong) UIView                                    *rightActionContentView;
 @property (nonatomic, strong) ACPACVCActionView                         *rightActionView;
 @property (nonatomic, assign) CGFloat                                   rightActionViewYOffset;
 @property (nonatomic, assign, readonly) BOOL                            isClosingRightActionView;
 
 @property (nonatomic, strong) UIPanGestureRecognizer                    *panGestureRecognizer;
 @property (nonatomic, assign) CGPoint                                   gestureBeganPoint;
+
+@property (nonatomic, strong) ACPanAbleCollectionViewCellOverlay        *overlay;
 
 @end
 
@@ -66,22 +55,24 @@ static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIView
 - (void)prepareForReuse {
     [super prepareForReuse];
     
-    //-- contentView position
-    self.contentView.frame = self.bounds;
-    //----------------------------------------------------------------------------------------------//
-    
-    //-- state
+    //-- rest
+    [self removeOverlay];
+
     [self pac_cancelPanGesture];
     
-    self.isActionViewActiving = NO;
+    _isActionViewActiving = NO;
     
     _isLeftActionViewOpened = NO;
-    self.disableLeftActionView = YES;
+    _disableLeftActionView = YES;
     
     _isRightActionViewOpened = NO;
-    self.disableRightActionView = YES;
+    _disableRightActionView = YES;
     
     self.userInteractionEnabled = YES;
+    //----------------------------------------------------------------------------------------------//
+    
+    //-- contentView position
+    self.contentView.frame = self.bounds;
     //----------------------------------------------------------------------------------------------//
 }
 
@@ -135,12 +126,13 @@ static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIView
     if (!self.isLeftActionViewOpened && !self.isRightActionViewOpened && !self.disableLeftActionView) {
         self.userInteractionEnabled = NO;
         
-        self.isActionViewActiving = YES;
+        _isActionViewActiving = YES;
         
         //self.leftActionContentView.hidden = NO;
         //self.leftActionContentView.alpha = 1.0;
         
         [self.contentView bringSubviewToFront:self.leftActionContentView];
+        [self addOverlayOnCellCollectionView];
 
         [UIView animateWithDuration:ACPACVCell_ActionViewAnimationDuration
                               delay:0.0
@@ -163,8 +155,10 @@ static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIView
 - (void)pac_didShowLeftActionView {
     _isLeftActionViewOpened = YES;
     
-    self.isActionViewActiving = NO;
+    _isActionViewActiving = NO;
     
+    [self addOverlayOnCellCollectionView];
+
     if ([self.pacDelegate respondsToSelector:@selector(collectionView:didShowLeftActionViewAtIndexPath:)]) {
         [self.pacDelegate collectionView:[self currentCollectionView]
         didShowLeftActionViewAtIndexPath:[self currentIndexPath]];
@@ -174,7 +168,7 @@ static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIView
 - (void)pac_restoreLeftActionViewOpenedState {
     self.userInteractionEnabled = NO;
     
-    self.isActionViewActiving = YES;
+    _isActionViewActiving = YES;
     
     //self.leftActionContentView.hidden = NO;
     //self.leftActionContentView.alpha = 1.0;
@@ -191,42 +185,44 @@ static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIView
                      completion:^(BOOL finished) {
                          _isLeftActionViewOpened = YES;
                          
-                         self.isActionViewActiving = NO;
+                         _isActionViewActiving = NO;
                          
                          self.userInteractionEnabled = YES;
                      }];
 }
 
 - (void)pac_hideLeftActionView {
-    if (!self.isClosingLeftActionView
-        || self.isLeftActionViewOpened
-        || self.isActionViewActiving) {
-        self.userInteractionEnabled = NO;
-        
-        self.isActionViewActiving = YES;
-        
-        _isClosingLeftActionView = YES;
-        
-        [UIView animateWithDuration:ACPACVCell_ActionViewAnimationDuration
-                              delay:0.0
-             usingSpringWithDamping:ACPACVCell_ActionViewAnimationSpringDamping
-              initialSpringVelocity:ACPACVCell_ActionViewAnimationSpringVelocity
-                            options:ACPACVCell_ActionViewAnimationOptions
-                         animations:^ {
-                             self.contentView.frame = self.bounds;
-                         }
-                         completion:^(BOOL finished) {
-                             //self.leftActionContentView.alpha = 0.0;
-                             //self.leftActionContentView.hidden = YES;
-                             _isLeftActionViewOpened = NO;
-                             _isClosingLeftActionView = NO;
-                             
-                             self.isActionViewActiving = NO;
-                             
-                             self.userInteractionEnabled = YES;
-                         }];
-        
+    if (self.isClosingLeftActionView
+        || self.contentView.frame.origin.x == 0.0) {
+        return;
     }
+
+    [self removeOverlay];
+
+    self.userInteractionEnabled = NO;
+    
+    _isActionViewActiving = YES;
+    
+    _isClosingLeftActionView = YES;
+    
+    [UIView animateWithDuration:ACPACVCell_ActionViewAnimationDuration
+                          delay:0.0
+         usingSpringWithDamping:ACPACVCell_ActionViewAnimationSpringDamping
+          initialSpringVelocity:ACPACVCell_ActionViewAnimationSpringVelocity
+                        options:ACPACVCell_ActionViewAnimationOptions
+                     animations:^ {
+                         self.contentView.frame = self.bounds;
+                     }
+                     completion:^(BOOL finished) {
+                         //self.leftActionContentView.alpha = 0.0;
+                         //self.leftActionContentView.hidden = YES;
+                         _isLeftActionViewOpened = NO;
+                         _isClosingLeftActionView = NO;
+                         
+                         _isActionViewActiving = NO;
+                         
+                         self.userInteractionEnabled = YES;
+                     }];
 }
 
 #pragma mark - Right ActionView Methods
@@ -281,12 +277,13 @@ static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIView
     if (!self.isRightActionViewOpened && !self.isLeftActionViewOpened && !self.disableRightActionView) {
         self.userInteractionEnabled = NO;
         
-        self.isActionViewActiving = YES;
+        _isActionViewActiving = YES;
         
         //self.rightActionContentView.hidden = NO;
         //self.rightActionContentView.alpha = 1.0;
         
         [self.contentView bringSubviewToFront:self.rightActionContentView];
+        [self addOverlayOnCellCollectionView];
 
         [UIView animateWithDuration:ACPACVCell_ActionViewAnimationDuration
                               delay:0.0
@@ -309,7 +306,9 @@ static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIView
 - (void)pac_didShowRightActionView {
     _isRightActionViewOpened = YES;
     
-    self.isActionViewActiving = NO;
+    _isActionViewActiving = NO;
+    
+    [self addOverlayOnCellCollectionView];
     
     if ([self.pacDelegate respondsToSelector:@selector(collectionView:didShowRightActionViewAtIndexPath:)]) {
         [self.pacDelegate collectionView:[self currentCollectionView]
@@ -320,7 +319,7 @@ static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIView
 - (void)pac_restoreRightActionViewOpenedState {
     self.userInteractionEnabled = NO;
     
-    self.isActionViewActiving = YES;
+    _isActionViewActiving = YES;
     
     //self.rightActionContentView.hidden = NO;
     //self.rightActionContentView.alpha = 1.0;
@@ -337,41 +336,44 @@ static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIView
                      completion:^(BOOL finished) {
                          _isRightActionViewOpened = YES;
                          
-                         self.isActionViewActiving = NO;
+                         _isActionViewActiving = NO;
                          
                          self.userInteractionEnabled = YES;
                      }];
 }
 
 - (void)pac_hideRightActionView {
-    if (!self.isClosingRightActionView
-        || self.isRightActionViewOpened
-        || self.isActionViewActiving) {
-        self.userInteractionEnabled = NO;
-        
-        self.isActionViewActiving = YES;
-        
-        _isClosingRightActionView = YES;
-        
-        [UIView animateWithDuration:ACPACVCell_ActionViewAnimationDuration
-                              delay:0.0
-             usingSpringWithDamping:ACPACVCell_ActionViewAnimationSpringDamping
-              initialSpringVelocity:ACPACVCell_ActionViewAnimationSpringVelocity
-                            options:ACPACVCell_ActionViewAnimationOptions
-                         animations:^ {
-                             self.contentView.frame = self.bounds;
-                         }
-                         completion:^(BOOL finished) {
-                             //self.rightActionContentView.alpha = 0.0;
-                             //self.rightActionContentView.hidden = YES;
-                             _isRightActionViewOpened = NO;
-                             _isClosingRightActionView = NO;
-                             
-                             self.isActionViewActiving = NO;
-                             
-                             self.userInteractionEnabled = YES;
-                         }];
+    if (self.isClosingRightActionView
+        || self.contentView.frame.origin.x == 0.0) {
+        return;
     }
+
+    [self removeOverlay];
+
+    self.userInteractionEnabled = NO;
+    
+    _isActionViewActiving = YES;
+    
+    _isClosingRightActionView = YES;
+    
+    [UIView animateWithDuration:ACPACVCell_ActionViewAnimationDuration
+                          delay:0.0
+         usingSpringWithDamping:ACPACVCell_ActionViewAnimationSpringDamping
+          initialSpringVelocity:ACPACVCell_ActionViewAnimationSpringVelocity
+                        options:ACPACVCell_ActionViewAnimationOptions
+                     animations:^ {
+                         self.contentView.frame = self.bounds;
+                     }
+                     completion:^(BOOL finished) {
+                         //self.rightActionContentView.alpha = 0.0;
+                         //self.rightActionContentView.hidden = YES;
+                         _isRightActionViewOpened = NO;
+                         _isClosingRightActionView = NO;
+                         
+                         _isActionViewActiving = NO;
+                         
+                         self.userInteractionEnabled = YES;
+                     }];
 }
 
 #pragma mark - Initialization
@@ -387,7 +389,7 @@ static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIView
     [self.contentView addGestureRecognizer:self.panGestureRecognizer];
     
     // add action content view
-    self.leftActionContentView = [[UIView alloc] initWithFrame:CGRectZero];
+    _leftActionContentView = [[UIView alloc] initWithFrame:CGRectZero];
     self.leftActionContentView.backgroundColor = [UIColor clearColor];
     self.leftActionContentView.clipsToBounds = YES;
     [self addSubview:self.leftActionContentView];
@@ -396,7 +398,7 @@ static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIView
     //self.leftActionContentView.alpha = 0.0;
     //self.leftActionContentView.hidden = YES;
     
-    self.rightActionContentView = [[UIView alloc] initWithFrame:CGRectZero];
+    _rightActionContentView = [[UIView alloc] initWithFrame:CGRectZero];
     self.rightActionContentView.backgroundColor = [UIColor clearColor];
     self.rightActionContentView.clipsToBounds = YES;
     [self addSubview:self.rightActionContentView];
@@ -404,6 +406,11 @@ static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIView
     self.disableRightActionView = YES;
     //self.rightActionContentView.alpha = 0.0;
     //self.rightActionContentView.hidden = YES;
+    
+    // overlay
+    UICollectionView *collectionView = [self currentCollectionView];
+    self.overlay = [[ACPanAbleCollectionViewCellOverlay alloc] initWithFrame:collectionView.bounds];
+    self.overlay.ownerCell = self;
 }
 
 #pragma mark - UIGestureRecognizerDelegate
@@ -434,20 +441,18 @@ static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIView
 #pragma mark - Pan Gesture
 
 - (void)pac_didPan:(UIGestureRecognizer *)recognizer {
-    // reset other cells
+    // cancel other cells
     NSArray *visibleCells = [self currentCollectionView].visibleCells;
     for (UICollectionViewCell *cell in visibleCells) {
         if ([cell isKindOfClass:[ACPanAbleCollectionViewCell class]] && cell != self) {
             ACPanAbleCollectionViewCell *panAbleCell = (ACPanAbleCollectionViewCell *)cell;
             [panAbleCell pac_cancelPanGesture];
-            [panAbleCell pac_hideLeftActionView];
-            [panAbleCell pac_hideRightActionView];
         }
     }
     
     // current cell
     if (recognizer == self.panGestureRecognizer) {
-        self.isActionViewActiving = YES;
+        _isActionViewActiving = YES;
         CGPoint currentPoint = [self.panGestureRecognizer translationInView:self.contentView]; // [self.panGestureRecognizer locationInView:self.contentView];
         
         switch (recognizer.state) {
@@ -476,6 +481,7 @@ static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIView
                             //self.leftActionContentView.alpha = 1.0;
                             
                             [self.contentView bringSubviewToFront:self.leftActionContentView];
+                            [self addOverlayOnCellCollectionView];
                             
                             if (dx <= (self.leftActionContentView.bounds.size.width + ACPACVCell_DistanceForCantMoveMoreHint)) {
                                 cellContentViewNewXPosition = dx;
@@ -515,6 +521,7 @@ static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIView
                             //self.rightActionContentView.alpha = 1.0;
                             
                             [self.contentView bringSubviewToFront:self.rightActionContentView];
+                            [self addOverlayOnCellCollectionView];
 
                             if (-dx <= (self.rightActionContentView.bounds.size.width + ACPACVCell_DistanceForCantMoveMoreHint)) {
                                 cellContentViewNewXPosition = dx;
@@ -643,7 +650,7 @@ static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIView
         self.panGestureRecognizer.enabled = NO;
         self.panGestureRecognizer.enabled = YES;
         
-        self.isActionViewActiving = YES;
+        _isActionViewActiving = YES;
         
         [UIView animateWithDuration:ACPACVCell_ActionViewAnimationDuration
                               delay:0.0
@@ -659,11 +666,30 @@ static NSUInteger const ACPACVCell_ActionViewAnimationOptions           = UIView
                              _isRightActionViewOpened = NO;
                              _isClosingRightActionView = NO;
                              
-                             self.isActionViewActiving = NO;
+                             _isActionViewActiving = NO;
                              
                              self.userInteractionEnabled = YES;
                          }];
     }
+    [self removeOverlay];
+}
+
+#pragma mark - Overlay
+
+- (void)addOverlayOnCellCollectionView {
+    UICollectionView *collectionView = [self currentCollectionView];
+    if (self.overlay.superview
+        && self.overlay.superview == collectionView) {
+        return;
+    }
+    [collectionView addSubview:self.overlay];
+}
+
+- (void)removeOverlay {
+    if (!self.overlay.superview) {
+        return;
+    }
+    [self.overlay removeFromSuperview];
 }
 
 #pragma mark - Extensions

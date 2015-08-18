@@ -30,7 +30,7 @@ typedef NS_ENUM(NSUInteger, FirstVCCVCellActionOptions) {
 
 @property (nonatomic, weak) id<FirstVCCVCellActionDelegate> actionDelegate;
 
-+ (CGFloat)heightForCellByIndexPath:(NSIndexPath *)indexPath;
++ (CGFloat)heightForCellByItemNumber:(NSNumber *)itemNumber;
 
 - (void)configCellByTitleTextString:(NSString *)titleTextString
                       actionOptions:(NSArray *)actionOptions;
