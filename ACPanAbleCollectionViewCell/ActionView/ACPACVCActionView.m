@@ -49,6 +49,11 @@
     return actionViewWidth;
 }
 
+- (CGFloat)requireDxForOpenActionView {
+    CGFloat halfOfAverageItemWidth = (([self actionViewWidth] / self.actionItemsOptionsIndexArray.count) / 2.0);
+    return halfOfAverageItemWidth;
+}
+
 #pragma mark - View
 
 - (void)layoutSubviews {

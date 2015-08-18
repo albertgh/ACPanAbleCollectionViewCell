@@ -150,6 +150,10 @@ FirstVCCVCellActionDelegate>
     //[self closeCurrentOpenedActionView];
     NSLog(@"didTapDeleteActionButtonAtIndexPath: %@", indexPath);
     
+    ACPanAbleCollectionViewCell *cell =
+    (ACPanAbleCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    [cell pac_hideRightActionView]; // if you will a delete cell, must hide action view first
+    
     [self.fakeDataMArray removeObjectAtIndex:indexPath.row];
     __weak __typeof(self)weakSelf = self;
     [self.collectionView

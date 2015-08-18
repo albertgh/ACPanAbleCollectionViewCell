@@ -41,6 +41,12 @@
     return self;
 }
 
+#pragma mark - Dealloc
+
+- (void)dealloc {
+    [self pac_removeOverlay];
+}
+
 #pragma mark - LayoutSubviews
 
 - (void)layoutSubviews {
@@ -56,7 +62,7 @@
     [super prepareForReuse];
     
     //-- rest
-    [self removeOverlay];
+    [self pac_removeOverlay];
 
     [self pac_cancelPanGesture];
     
@@ -132,7 +138,7 @@
         //self.leftActionContentView.alpha = 1.0;
         
         [self.contentView bringSubviewToFront:self.leftActionContentView];
-        [self addOverlayOnCellCollectionView];
+        [self pac_addOverlayOnCellCollectionView];
 
         [UIView animateWithDuration:ACPACVCell_ActionViewAnimationDuration
                               delay:0.0
@@ -157,7 +163,7 @@
     
     _isActionViewActiving = NO;
     
-    [self addOverlayOnCellCollectionView];
+    [self pac_addOverlayOnCellCollectionView];
 
     if ([self.pacDelegate respondsToSelector:@selector(collectionView:didShowLeftActionViewAtIndexPath:)]) {
         [self.pacDelegate collectionView:[self currentCollectionView]
@@ -197,7 +203,7 @@
         return;
     }
 
-    [self removeOverlay];
+    [self pac_removeOverlay];
 
     self.userInteractionEnabled = NO;
     
@@ -283,7 +289,7 @@
         //self.rightActionContentView.alpha = 1.0;
         
         [self.contentView bringSubviewToFront:self.rightActionContentView];
-        [self addOverlayOnCellCollectionView];
+        [self pac_addOverlayOnCellCollectionView];
 
         [UIView animateWithDuration:ACPACVCell_ActionViewAnimationDuration
                               delay:0.0
@@ -308,7 +314,7 @@
     
     _isActionViewActiving = NO;
     
-    [self addOverlayOnCellCollectionView];
+    [self pac_addOverlayOnCellCollectionView];
     
     if ([self.pacDelegate respondsToSelector:@selector(collectionView:didShowRightActionViewAtIndexPath:)]) {
         [self.pacDelegate collectionView:[self currentCollectionView]
@@ -348,7 +354,7 @@
         return;
     }
 
-    [self removeOverlay];
+    [self pac_removeOverlay];
 
     self.userInteractionEnabled = NO;
     
@@ -406,11 +412,6 @@
     self.disableRightActionView = YES;
     //self.rightActionContentView.alpha = 0.0;
     //self.rightActionContentView.hidden = YES;
-    
-    // overlay
-    UICollectionView *collectionView = [self currentCollectionView];
-    self.overlay = [[ACPanAbleCollectionViewCellOverlay alloc] initWithFrame:collectionView.bounds];
-    self.overlay.ownerCell = self;
 }
 
 #pragma mark - UIGestureRecognizerDelegate
@@ -481,7 +482,7 @@
                             //self.leftActionContentView.alpha = 1.0;
                             
                             [self.contentView bringSubviewToFront:self.leftActionContentView];
-                            [self addOverlayOnCellCollectionView];
+                            [self pac_addOverlayOnCellCollectionView];
                             
                             if (dx <= (self.leftActionContentView.bounds.size.width + ACPACVCell_DistanceForCantMoveMoreHint)) {
                                 cellContentViewNewXPosition = dx;
@@ -521,7 +522,7 @@
                             //self.rightActionContentView.alpha = 1.0;
                             
                             [self.contentView bringSubviewToFront:self.rightActionContentView];
-                            [self addOverlayOnCellCollectionView];
+                            [self pac_addOverlayOnCellCollectionView];
 
                             if (-dx <= (self.rightActionContentView.bounds.size.width + ACPACVCell_DistanceForCantMoveMoreHint)) {
                                 cellContentViewNewXPosition = dx;
@@ -561,7 +562,7 @@
                     if (!self.isLeftActionViewOpened
                         && !self.isRightActionViewOpened) {
                         if (!self.disableLeftActionView) {
-                            if (dx > (self.leftActionContentView.bounds.size.width / 2.0)) {
+                            if (dx > [self.leftActionView requireDxForOpenActionView]) {
                                 [self pac_showLeftActionView];
                             }
                             else if (dx >= self.leftActionContentView.bounds.size.width) {
@@ -597,7 +598,7 @@
                     if (!self.isRightActionViewOpened
                         && !self.isLeftActionViewOpened) {
                         if (!self.disableRightActionView) {
-                            if (-dx > (self.rightActionContentView.bounds.size.width / 2.0)) {
+                            if (-dx > [self.rightActionView requireDxForOpenActionView]) {
                                 [self pac_showRightActionView];
                             }
                             else if (-dx >= self.rightActionContentView.bounds.size.width) {
@@ -670,26 +671,30 @@
                              
                              self.userInteractionEnabled = YES;
                          }];
+        [self pac_removeOverlay];
     }
-    [self removeOverlay];
 }
 
 #pragma mark - Overlay
 
-- (void)addOverlayOnCellCollectionView {
-    UICollectionView *collectionView = [self currentCollectionView];
-    if (self.overlay.superview
-        && self.overlay.superview == collectionView) {
+- (void)pac_addOverlayOnCellCollectionView {
+    if (self.overlay) {
         return;
     }
+
+    UICollectionView *collectionView = [self currentCollectionView];
+    self.overlay = [[ACPanAbleCollectionViewCellOverlay alloc] initWithFrame:collectionView.bounds];
+    self.overlay.ownerCell = self;
+    
     [collectionView addSubview:self.overlay];
 }
 
-- (void)removeOverlay {
-    if (!self.overlay.superview) {
+- (void)pac_removeOverlay {
+    if (!self.overlay) {
         return;
     }
     [self.overlay removeFromSuperview];
+    self.overlay = nil;
 }
 
 #pragma mark - Extensions

@@ -19,6 +19,7 @@ inherit `ACPanAbleCollectionViewCell`
 - Creat `ACPACVCActionItem` with your own action.
 - Pass the array with actionItems into your `ACPACVCActionView` member variable.
 - Add it on cell.
+- If you will delete a cell, must hide the action view first.
 
 ```objc
 NSMutableArray *actionItemsMArray = [[NSMutableArray alloc] init];

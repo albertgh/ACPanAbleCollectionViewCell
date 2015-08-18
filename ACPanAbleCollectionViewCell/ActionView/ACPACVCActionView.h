@@ -17,5 +17,6 @@
 - (id)init __deprecated_msg("Method deprecated. Use `initWithActionItemsArray:`");
 
 - (CGFloat)actionViewWidth;
+- (CGFloat)requireDxForOpenActionView;
 
 @end
