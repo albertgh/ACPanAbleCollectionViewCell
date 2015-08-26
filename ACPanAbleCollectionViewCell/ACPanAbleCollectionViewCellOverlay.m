@@ -37,9 +37,6 @@
                                    [self convertPoint:point toView:self.ownerCell.leftActionContentView])) {
                 return nil;
             }
-        if (self.ownerCell.isLeftActionViewOpened) {
-            [self.ownerCell pac_hideLeftActionView];
-        }
         //----------------------------------------------------------------------------------------------//
         
         //-- check right action view
@@ -48,11 +45,11 @@
                                    [self convertPoint:point toView:self.ownerCell.rightActionContentView])) {
                 return nil;
             }
-        if (self.ownerCell.isRightActionViewOpened) {
-            [self.ownerCell pac_hideRightActionView];
-        }
         //----------------------------------------------------------------------------------------------//
         
+        [self.ownerCell pac_restoreAllActionViewClosedState];
+
+        /** this is not elegant
         //-- disable touches if action view is activing
         if (self.ownerCell.isActionViewActiving
             && [self.ownerCell currentCollectionView].userInteractionEnabled) {
@@ -62,6 +59,7 @@
             });
         }
         //----------------------------------------------------------------------------------------------//
+         */
     }
     return self;
 }

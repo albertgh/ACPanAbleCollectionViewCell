@@ -61,10 +61,14 @@
 - (void)prepareForReuse {
     [super prepareForReuse];
     
-    //-- rest
+    //-- contentView
+    [self.contentView.layer removeAllAnimations];
+    
+    self.contentView.frame = self.bounds;
+    //----------------------------------------------------------------------------------------------//
+    
+    //-- others
     [self pac_removeOverlay];
-
-    [self pac_cancelPanGesture];
     
     _isActionViewActiving = NO;
     
@@ -74,12 +78,39 @@
     _isRightActionViewOpened = NO;
     _disableRightActionView = YES;
     
+    
+    self.panGestureRecognizer.enabled = NO;
+    self.panGestureRecognizer.enabled = YES;
+
     self.userInteractionEnabled = YES;
     //----------------------------------------------------------------------------------------------//
+}
+
+#pragma mark - restore all action view closed state
+
+- (void)pac_restoreAllActionViewClosedState {
+    self.userInteractionEnabled = NO;
     
-    //-- contentView position
-    self.contentView.frame = self.bounds;
-    //----------------------------------------------------------------------------------------------//
+    _isActionViewActiving = YES;
+    
+    [UIView animateWithDuration:ACPACVCell_ActionViewAnimationDuration
+                          delay:0.0
+         usingSpringWithDamping:ACPACVCell_ActionViewAnimationSpringDamping
+          initialSpringVelocity:ACPACVCell_ActionViewAnimationSpringVelocity
+                        options:ACPACVCell_ActionViewAnimationOptions
+                     animations:^ {
+                         self.contentView.frame = self.bounds;
+                     }
+                     completion:^(BOOL finished) {
+                         _isLeftActionViewOpened = NO;
+                         _isRightActionViewOpened = NO;
+                         
+                         _isActionViewActiving = NO;
+                         
+                         [self pac_removeOverlay];
+                         
+                         self.userInteractionEnabled = YES;
+                     }];
 }
 
 #pragma mark - Left ActionView Methods

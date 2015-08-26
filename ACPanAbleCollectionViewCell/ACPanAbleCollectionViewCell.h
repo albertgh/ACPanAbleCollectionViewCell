@@ -47,6 +47,8 @@ static CGFloat const ACPACVCell_DistanceForCantMoveMoreHint             = 12.0;
 @property (nonatomic, strong, readonly) UIView                          *leftActionContentView;
 
 
+- (void)pac_restoreAllActionViewClosedState;
+
 /**
  * Add customize leftActionView
  * @param leftActionView : customize leftActionView (the width should be bigger then 44.0 and a little smaller than super view's width)
