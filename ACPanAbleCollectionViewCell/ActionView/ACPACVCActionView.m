@@ -19,6 +19,7 @@
 @implementation ACPACVCActionView
 
 #pragma mark - Init
+
 - (instancetype)initWithActionItemsArray:(NSArray *)actionItemsArray {
     self = [super initWithFrame:CGRectZero];
     if (self) {

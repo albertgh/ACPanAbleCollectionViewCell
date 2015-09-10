@@ -11,6 +11,12 @@
 
 @implementation ACPanAbleCollectionViewCellOverlay
 
+#pragma mark - Dealloc
+
+- (void)dealloc {
+    [self.ownerCell currentCollectionView].userInteractionEnabled = YES;
+}
+
 #pragma mark - Init
 
 - (id)initWithFrame:(CGRect)frame {
@@ -19,12 +25,6 @@
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     }
     return self;
-}
-
-#pragma mark - Dealloc
-
-- (void)dealloc {
-    [self.ownerCell currentCollectionView].userInteractionEnabled = YES;
 }
 
 #pragma mark - Hit Test

@@ -30,6 +30,12 @@
 
 @implementation ACPanAbleCollectionViewCell
 
+#pragma mark - Dealloc
+
+- (void)dealloc {
+    [self pac_removeOverlay];
+}
+
 #pragma mark - Init
 
 - (id)initWithFrame:(CGRect)frame {
@@ -39,12 +45,6 @@
         [self pac_initializeCell];
     }
     return self;
-}
-
-#pragma mark - Dealloc
-
-- (void)dealloc {
-    [self pac_removeOverlay];
 }
 
 #pragma mark - LayoutSubviews
